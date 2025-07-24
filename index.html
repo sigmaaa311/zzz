@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vextroz - Premium Roblox Extensions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --primary: #ffffff;
+            --accent: #ff3366;
+            --dark: #0a0a12;
+            --darker: #050509;
+            --neon-glow: 0 0 10px rgba(255, 51, 102, 0.8);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--primary);
+            background-color: var(--dark);
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        h1, h2, h3, h4 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        /* Galaxy Background */
+        #galaxy-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(to bottom, var(--darker), #1a1a2e);
+            overflow: hidden;
+        }
+        
+        .star {
+            position: absolute;
+            background-color: #fff;
+            border-radius: 50%;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+        
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+        
+        .comet {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: linear-gradient(to right, 
+                rgba(255,255,255,0) 0%, 
+                rgba(255,255,255,0.8) 50%, 
+                rgba(255,255,255,0) 100%);
+            border-radius: 50%;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+            animation: cometFly var(--duration) linear infinite;
+            transform: rotate(var(--angle)) translateX(var(--distance));
+        }
+        
+        @keyframes cometFly {
+            0% { transform: rotate(var(--angle)) translateX(0) translateY(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: rotate(var(--angle)) translateX(var(--distance)) translateY(var(--distance)); opacity: 0; }
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: rgba(10, 10, 18, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+        
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent);
+            text-shadow: var(--neon-glow);
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        /* Sections */
+        section {
+            min-height: 100vh;
+            padding: 8rem 5% 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+        
+        /* Home Section */
+        #home {
+            text-align: center;
+            align-items: center;
+        }
+        
+        .crown-scroll {
+            position: absolute;
+            top: 6rem;
+            left: 0;
+            width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            font-size: 2rem;
+        }
+        
+        .crown-scroll span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: crownScroll 20s linear infinite;
+        }
+        
+        @keyframes crownScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .home-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+        
+        .home-content h1 span {
+            color: var(--accent);
+        }
+        
+        .home-content p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: var(--accent);
+            color: var(--dark);
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.5);
+            border: 2px solid var(--accent);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(255, 51, 102, 0.8);
+            background-color: transparent;
+            color: var(--accent);
+        }
+        
+        /* Tools Section */
+        #tools {
+            padding-top: 10rem;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent);
+            box-shadow: var(--neon-glow);
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .tool-card {
+            background-color: rgba(20, 20, 36, 0.7);
+            border-radius: 10px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(255, 51, 102, 0.2);
+            border-color: var(--accent);
+        }
+        
+        .tool-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .tool-card p {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .view-tutorial {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+            border-radius: 50px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .view-tutorial:hover {
+            background-color: var(--accent);
+            color: var(--dark);
+            box-shadow: var(--neon-glow);
+        }
+        
+        /* Tool Detail Modal */
+        .tool-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(5, 5, 9, 0.9);
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .tool-modal.active {
+            display: flex;
+            opacity: 1;
+        }
+        
+        .modal-content {
+            background-color: var(--dark);
+            border-radius: 10px;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 2rem;
+            position: relative;
+            border: 1px solid var(--accent);
+            box-shadow: 0 0 30px rgba(255, 51, 102, 0.3);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--accent);
+            transform: rotate(90deg);
+        }
+        
+        .modal-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .modal-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .modal-left {
+            background-color: rgba(20, 20, 36, 0.7);
+            border-radius: 8px;
+            padding: 1.5rem;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        
+        .modal-left h4 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .github-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .modal-right {
+            background-color: rgba(20, 20, 36, 0.7);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+        
+        .video-placeholder {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background-color: rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+        
+        .tutorial-text {
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            padding: 1rem;
+            line-height: 1.6;
+        }
+        
+        /* Tutorial Section */
+        #tutorial {
+            background-color: rgba(10, 10, 18, 0.7);
+        }
+        
+        .steps-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(20, 20, 36, 0.7);
+            border-radius: 10px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .step {
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .step:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .step-number {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background-color: var(--accent);
+            color: var(--dark);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+        
+        .step h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .step p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        
+        /* FAQ Section */
+        #faq {
+            text-align: center;
+        }
+        
+        .faq-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .faq-content p {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .discord-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background-color: #5865F2;
+            color: white;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
+            border: 2px solid #5865F2;
+        }
+        
+        .discord-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 25px rgba(88, 101, 242, 0.8);
+            background-color: transparent;
+            color: #5865F2;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: rgba(10, 10, 18, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        footer p {
+            opacity: 0.7;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .home-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .home-content h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none; /* Consider a mobile menu for real implementation */
+            }
+            
+            .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Galaxy Background -->
+    <div id="galaxy-bg"></div>
+    
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Vext<span>roz</span></div>
+        <div class="nav-links">
+            <a href="#home">🏠 Home</a>
+            <a href="#tools">🧰 Tools</a>
+            <a href="#tutorial">📚 Tutorial</a>
+            <a href="#faq">💬 FAQ</a>
+        </div>
+    </nav>
+    
+    <!-- Home Section -->
+    <section id="home">
+        <div class="crown-scroll">
+            <span>👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑 👑</span>
+        </div>
+        <div class="home-content">
+            <h1>The Best <span>Roblox Extensions</span> in 2025<br>Made by <span>Vextroz</span></h1>
+            <p>Experience the most powerful, safe, and optimized Roblox extensions. Our tools are designed to enhance your gameplay while maintaining the highest standards of security and performance.</p>
+            <a href="#tools" class="cta-button">🚀 Start Your Journey</a>
+        </div>
+    </section>
+    
+    <!-- Tools Section -->
+    <section id="tools">
+        <h2 class="section-title">🧰 Vextroz Tools</h2>
+        <div class="tools-grid">
+            <div class="tool-card">
+                <h3>Vextroz Explorer</h3>
+                <p>Advanced game exploration tool that reveals hidden assets, maps, and game structures with an intuitive interface.</p>
+                <button class="view-tutorial" data-tool="explorer">View Tutorial</button>
+            </div>
+            <div class="tool-card">
+                <h3>Vextroz Script Hub</h3>
+                <p>Comprehensive library of optimized scripts for various Roblox games, with auto-update functionality.</p>
+                <button class="view-tutorial" data-tool="script-hub">View Tutorial</button>
+            </div>
+            <div class="tool-card">
+                <h3>Vextroz UI Enhancer</h3>
+                <p>Customize and enhance Roblox UI elements with advanced theming options and performance tweaks.</p>
+                <button class="view-tutorial" data-tool="ui-enhancer">View Tutorial</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Tool Detail Modals -->
+    <div class="tool-modal" id="explorer-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Vextroz Explorer</h3>
+            <div class="modal-grid">
+                <div class="modal-left">
+                    <h4>GitHub Repository</h4>
+                    <div class="github-placeholder">
+                        <p>GitHub repository content would be displayed here</p>
+                    </div>
+                </div>
+                <div class="modal-right">
+                    <div class="video-placeholder">
+                        <p>Embedded YouTube tutorial would appear here</p>
+                    </div>
+                    <div class="tutorial-text">
+                        <h4>Quick Start Guide:</h4>
+                        <p>1. Download the extension package from our GitHub</p>
+                        <p>2. Extract the files to a folder on your computer</p>
+                        <p>3. Follow the Chrome extension loading tutorial below</p>
+                        <p>4. Launch Roblox and press F12 to open the explorer</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tool-modal" id="script-hub-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Vextroz Script Hub</h3>
+            <div class="modal-grid">
+                <div class="modal-left">
+                    <h4>GitHub Repository</h4>
+                    <div class="github-placeholder">
+                        <p>GitHub repository content would be displayed here</p>
+                    </div>
+                </div>
+                <div class="modal-right">
+                    <div class="video-placeholder">
+                        <p>Embedded YouTube tutorial would appear here</p>
+                    </div>
+                    <div class="tutorial-text">
+                        <h4>Quick Start Guide:</h4>
+                        <p>1. Install the extension following our tutorial</p>
+                        <p>2. Open the script hub from the extension icon</p>
+                        <p>3. Browse or search for scripts for your game</p>
+                        <p>4. Click "Execute" to run the selected script</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tool-modal" id="ui-enhancer-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Vextroz UI Enhancer</h3>
+            <div class="modal-grid">
+                <div class="modal-left">
+                    <h4>GitHub Repository</h4>
+                    <div class="github-placeholder">
+                        <p>GitHub repository content would be displayed here</p>
+                    </div>
+                </div>
+                <div class="modal-right">
+                    <div class="video-placeholder">
+                        <p>Embedded YouTube tutorial would appear here</p>
+                    </div>
+                    <div class="tutorial-text">
+                        <h4>Quick Start Guide:</h4>
+                        <p>1. Install the extension package</p>
+                        <p>2. Access the UI settings from the extension menu</p>
+                        <p>3. Customize colors, layouts, and features</p>
+                        <p>4. Save your profile for automatic loading</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Tutorial Section -->
+    <section id="tutorial">
+        <h2 class="section-title">📚 How to Load Unpacked Extensions in Chrome</h2>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Open Chrome Extensions</h3>
+                <p>Navigate to <code>chrome://extensions</code> in your Chrome browser address bar.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Enable Developer Mode</h3>
+                <p>Toggle the "Developer mode" switch in the top-right corner of the extensions page.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Load Unpacked Extension</h3>
+                <p>Click the "Load unpacked" button that appears and select your extension folder.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Select Extension Folder</h3>
+                <p>Choose the folder containing your Vextroz extension files (must contain a manifest.json file).</p>
+            </div>
+            <div class="step">
+                <div class="step-number">5</div>
+                <h3>Complete Installation</h3>
+                <p>Your extension will now appear in Chrome and can be pinned for easy access.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section id="faq">
+        <h2 class="section-title">💬 Need Help or Support?</h2>
+        <div class="faq-content">
+            <p>Join our vibrant community of developers and gamers. Get live help, share tips, and stay updated with the latest Vextroz extensions.</p>
+            <p><em>"Join the Vextroz gang for live help, tips, and exclusive updates."</em></p>
+            <a href="https://discord.gg/example" target="_blank" class="discord-button">Join Our Discord</a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Vextroz. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Create Galaxy Background
+        function createGalaxy() {
+            const galaxy = document.getElementById('galaxy-bg');
+            
+            // Create stars
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // Random properties
+                const size = Math.random() * 3;
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                const duration = 2 + Math.random() * 3;
+                
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                star.style.left = `${x}%`;
+                star.style.top = `${y}%`;
+                star.style.setProperty('--duration', `${duration}s`);
+                
+                galaxy.appendChild(star);
+            }
+            
+            // Create comets
+            for (let i = 0; i < 5; i++) {
+                const comet = document.createElement('div');
+                comet.classList.add('comet');
+                
+                // Random properties
+                const angle = -45 + Math.random() * 90;
+                const delay = Math.random() * 15;
+                const duration = 5 + Math.random() * 10;
+                const distance = 100 + Math.random() * 50;
+                
+                comet.style.setProperty('--angle', `${angle}deg`);
+                comet.style.setProperty('--distance', `${distance}px`);
+                comet.style.animationDelay = `${delay}s`;
+                comet.style.setProperty('--duration', `${duration}s`);
+                
+                // Random position
+                comet.style.left = `${Math.random() * 100}%`;
+                comet.style.top = `${Math.random() * 100}%`;
+                
+                galaxy.appendChild(comet);
+            }
+        }
+        
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Tool modal functionality
+        document.querySelectorAll('.view-tutorial').forEach(button => {
+            button.addEventListener('click', function() {
+                const toolName = this.getAttribute('data-tool');
+                const modal = document.getElementById(`${toolName}-modal`);
+                
+                if (modal) {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+        
+        document.querySelectorAll('.close-modal').forEach(button => {
+            button.addEventListener('click', function() {
+                this.closest('.tool-modal').classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+        });
+        
+        // Close modal when clicking outside content
+        document.querySelectorAll('.tool-modal').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                }
+            });
+        });
+        
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            createGalaxy();
+        });
+    </script>
+</body>
+</html>
